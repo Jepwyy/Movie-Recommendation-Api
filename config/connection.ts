@@ -1,6 +1,14 @@
 import { Pool } from 'pg'
-import { Kysely, PostgresDialect } from 'kysely'
+import { Generated, Kysely, PostgresDialect } from 'kysely'
 
+interface movieTable {
+  id: Generated<number>
+  title: string
+  genres: string[]
+}
+interface Database {
+  movie: movieTable
+}
 const dialect = new PostgresDialect({
   pool: new Pool({
     client: 'cockroachdb',
@@ -9,6 +17,6 @@ const dialect = new PostgresDialect({
   }),
 })
 
-export const connection = new Kysely({
+export const db = new Kysely<Database>({
   dialect,
 })
