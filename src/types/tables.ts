@@ -1,7 +1,7 @@
 import { Generated, Insertable, Selectable, Updateable } from 'kysely'
 
 export interface movieTable {
-  id: Generated<number>
+  id: number
   title: string
   genres: string[]
 }

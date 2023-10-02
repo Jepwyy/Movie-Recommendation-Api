@@ -25,10 +25,10 @@ export async function createMovie(movie: NewMovie) {
     .executeTakeFirstOrThrow()
 }
 
-export async function deletePerson(id: number) {
+export async function deleteMovie(id: number) {
   return await db
     .deleteFrom('movies')
-    .where('id', '=', id)
+    .where('id', '=', 905013401090326529)
     .returningAll()
     .executeTakeFirst()
 }
