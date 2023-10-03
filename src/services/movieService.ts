@@ -1,7 +1,7 @@
 import { db } from '../../config/database'
 import { Movie, NewMovie, MovieUpdate } from 'tables'
 
-export async function findMovieById(id: number) {
+export async function findMovieById(id: string) {
   return await db
     .selectFrom('movies')
     .where('id', '=', id)
@@ -13,7 +13,7 @@ export async function findAllMovies() {
   return await db.selectFrom('movies').selectAll().execute()
 }
 
-export async function updateMovie(id: number, updateWith: MovieUpdate) {
+export async function updateMovie(id: string, updateWith: MovieUpdate) {
   await db.updateTable('movies').set(updateWith).where('id', '=', id).execute()
 }
 
@@ -25,10 +25,10 @@ export async function createMovie(movie: NewMovie) {
     .executeTakeFirstOrThrow()
 }
 
-export async function deleteMovie(id: number) {
+export async function deleteMovie(id: string) {
   return await db
     .deleteFrom('movies')
-    .where('id', '=', 905013401090326529)
+    .where('id', '=', id)
     .returningAll()
     .executeTakeFirst()
 }

@@ -35,7 +35,7 @@ async function addMovies(req: Request, res: Response) {
 }
 async function removeMovies(req: Request, res: Response) {
   try {
-    const { id } = req.body
+    const { id } = req.params
     if (!id) {
       res.status(400).json({ error: 'No id detected' })
     }
@@ -51,4 +51,23 @@ async function removeMovies(req: Request, res: Response) {
     res.status(500).json({ error: 'Internal server error' })
   }
 }
-export default { getMovies, addMovies, removeMovies }
+
+async function findMovies(req: Request, res: Response) {
+  try {
+    const { id } = req.params
+    if (!id) {
+      res.status(400).json({ error: 'No id detected' })
+    }
+
+    const movie = await findMovieById(id)
+    if (!movie) {
+      res.status(404).json({ error: `Movie with ID ${id} not found` })
+    } else {
+      res.status(200).json(movie)
+    }
+  } catch (error) {
+    console.error('Error fetching movies:', error)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+}
+export default { getMovies, addMovies, removeMovies, findMovies }

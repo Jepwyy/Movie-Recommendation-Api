@@ -11,9 +11,9 @@ const dialect = new PostgresDialect({
     port: 26257,
     max: 10,
     ssl: {
-      rejectUnauthorized: false, // Set to true in production with proper certificates
+      rejectUnauthorized: false,
 
-      ca: 'C:/Users/Jeff/AppData/Roaming/postgresql/root.crt', // Path to your client certificate
+      ca: 'C:/Users/Jeff/AppData/Roaming/postgresql/root.crt',
     },
   }),
 })
