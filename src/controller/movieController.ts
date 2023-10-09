@@ -4,6 +4,7 @@ import {
   findAllMovies,
   deleteMovie,
   findMovieById,
+  updateMovie,
 } from '../services/movieService'
 
 async function getMovies(req: Request, res: Response) {
@@ -28,6 +29,25 @@ async function addMovies(req: Request, res: Response) {
       genres,
     })
     res.status(200).json({ message: 'Movie added successfully', movie })
+  } catch (error) {
+    console.error('Error fetching movies:', error)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+}
+async function updateMovies(req: Request, res: Response) {
+  try {
+    const { id } = req.params
+    const { title, genres } = req.body
+    if (!id || !title || !genres) {
+      return res
+        .status(400)
+        .json({ message: 'Please Enter All Required Fields!' })
+    }
+    await updateMovie(id, {
+      title,
+      genres,
+    })
+    res.status(200).json({ message: 'Movie updated successfully' })
   } catch (error) {
     console.error('Error fetching movies:', error)
     res.status(500).json({ error: 'Internal server error' })
@@ -70,4 +90,4 @@ async function findMovies(req: Request, res: Response) {
     res.status(500).json({ error: 'Internal server error' })
   }
 }
-export default { getMovies, addMovies, removeMovies, findMovies }
+export default { getMovies, addMovies, removeMovies, findMovies, updateMovies }
