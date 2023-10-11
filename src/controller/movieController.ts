@@ -16,6 +16,16 @@ async function getMovies(req: Request, res: Response) {
     res.status(500).json({ error: 'Internal server error' })
   }
 }
+async function getRandomMovies(req: Request, res: Response) {
+  try {
+    const allMovies = await findAllMovies()
+    const randomIndex = Math.floor(Math.random() * allMovies.length)
+    res.status(200).json(allMovies[randomIndex])
+  } catch (error) {
+    console.error('Error fetching random movies:', error)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+}
 async function addMovies(req: Request, res: Response) {
   try {
     const { title, genres } = req.body
@@ -129,4 +139,5 @@ export default {
   findMovies,
   updateMovies,
   addMoreMovies,
+  getRandomMovies,
 }
