@@ -90,4 +90,43 @@ async function findMovies(req: Request, res: Response) {
     res.status(500).json({ error: 'Internal server error' })
   }
 }
-export default { getMovies, addMovies, removeMovies, findMovies, updateMovies }
+async function addMoreMovies(req: Request, res: Response) {
+  try {
+    const moviesArray = req.body
+
+    if (!Array.isArray(moviesArray) || moviesArray.length === 0) {
+      return res
+        .status(400)
+        .json({ message: 'Please provide an array of movies' })
+    }
+
+    for (const movieData of moviesArray) {
+      const { title, genres } = movieData
+
+      if (!title || !genres || !Array.isArray(genres)) {
+        console.error('Invalid movie data:', movieData)
+        continue
+      }
+
+      const movie = await createMovie({
+        title,
+        genres,
+      })
+
+      console.log(`Movie added successfully: ${title}`)
+    }
+
+    res.status(200).json({ message: 'Movies added successfully' })
+  } catch (error) {
+    console.error('Error adding movies:', error)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+}
+export default {
+  getMovies,
+  addMovies,
+  removeMovies,
+  findMovies,
+  updateMovies,
+  addMoreMovies,
+}
